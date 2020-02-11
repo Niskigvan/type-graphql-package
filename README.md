@@ -25,19 +25,22 @@ First, we create all the GraphQL types in `schema.gql` using SDL. Then we create
 Only then can we actually implement the resolvers using weird generic signatures and manually performing common tasks, like validation, authorization and loading dependencies:
 
 ```js
-export const getRecipesResolver: GraphQLFieldResolver<void, Context, GetRecipesArgs> =
-  async (_, args, ctx) => {
-    // common tasks repeatable for almost every resolver
-    const repository = TypeORM.getRepository(Recipe);
-    const auth = Container.get(AuthService);
-    await joi.validate(getRecipesSchema, args);
-    if (!auth.check(ctx.user)) {
-      throw new NotAuthorizedError();
-    }
+export const getRecipesResolver: GraphQLFieldResolver<
+  void,
+  Context,
+  GetRecipesArgs
+> = async (_, args, ctx) => {
+  // common tasks repeatable for almost  every resolver
+  const repository = TypeORM.getRepository(Recipe);
+  const auth = Container.get(AuthService);
+  await joi.validate(getRecipesSchema, args);
+  if (!auth.check(ctx.user)) {
+    throw new NotAuthorizedError();
+  }
 
-    // our business logic, e.g.:
-    return repository.find({ skip: args.offset, take: args.limit });
-  };
+  // our business logic, e.g.:
+  return repository.find({ skip: args.offset, take: args.limit });
+};
 ```
 
 The biggest problem is redundancy in our codebase, which makes it difficult to keep things in sync. To add a new field to our entity, we have to jump through all the files - modify an entity class, the schema, as well as the interface. The same goes for inputs or arguments. It's easy to forget to update one piece or make a mistake with a single type. Also, what if we've made a typo in field name? The rename feature (F2) won't work correctly.
@@ -161,13 +164,13 @@ Please ask your company to also support this open source project by [becoming a 
 
 ### Sponsors 🚀
 
-| [<img src="https://raw.githubusercontent.com/MichalLytek/type-graphql/master/img/gorrion.png" width="250">](https://gorrion.io/) |  [<img src="https://opencollective-production.s3-us-west-1.amazonaws.com/73f90010-67e9-11e9-b984-89e2dc4d10f9.jpg" height="100">](https://opencollective.com/demid-nikitin) | [<img src="https://raw.githubusercontent.com/MichalLytek/type-graphql/master/img/alka.png" width="150">](https://alka.app/) |
-| :---: | :---: | :---: | 
-| [**Gorrion Software House**](https://gorrion.io/) | [**Demid Nikitin**](https://opencollective.com/demid-nikitin) | [**Alka Finance**](https://alka.app/) |
+| [<img src="https://raw.githubusercontent.com/MichalLytek/type-graphql/master/img/gorrion.png" width="250">](https://gorrion.io/) | [<img src="https://opencollective-production.s3-us-west-1.amazonaws.com/73f90010-67e9-11e9-b984-89e2dc4d10f9.jpg" height="100">](https://opencollective.com/demid-nikitin) | [<img src="https://raw.githubusercontent.com/MichalLytek/type-graphql/master/img/alka.png" width="150">](https://alka.app/) |
+| :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
+|                                        [**Gorrion Software House**](https://gorrion.io/)                                         |                                                       [**Demid Nikitin**](https://opencollective.com/demid-nikitin)                                                        |                                            [**Alka Finance**](https://alka.app/)                                            |
 
 [![Become a Sponsor](https://opencollective.com/static/images/become_sponsor.svg)](https://opencollective.com/typegraphql)
 
-###  Members 💪 and Backers ☕
+### Members 💪 and Backers ☕
 
 [![](https://opencollective.com/typegraphql/sponsors.svg?width=890&button=false)](https://opencollective.com/typegraphql#contributors)
 [![](https://opencollective.com/typegraphql/backers.svg?width=890&button=false)](https://opencollective.com/typegraphql#contributors)
