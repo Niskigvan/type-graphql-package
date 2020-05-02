@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const findType_1 = require("./findType");
 const errors_1 = require("../errors");
-function getParamInfo({ prototype, propertyKey, parameterIndex, returnTypeFunc, options = {}, }) {
+function getParamInfo({ prototype, propertyKey, parameterIndex, argName, returnTypeFunc, options = {}, }) {
     if (typeof propertyKey === "symbol") {
         throw new errors_1.SymbolKeysNotSupportedError();
     }
@@ -11,6 +11,7 @@ function getParamInfo({ prototype, propertyKey, parameterIndex, returnTypeFunc, 
         prototype,
         propertyKey,
         parameterIndex,
+        argName,
         returnTypeFunc,
         typeOptions: options,
     });

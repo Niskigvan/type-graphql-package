@@ -1,7 +1,7 @@
 import { GraphQLSchema } from "graphql";
 import { SchemaGeneratorOptions } from "../schema/schema-generator";
 import { PrintSchemaOptions } from "./emitSchemaDefinitionFile";
-import { NonEmptyArray } from "./types";
+import { NonEmptyArray } from "../interfaces/NonEmptyArray";
 interface EmitSchemaFileOptions extends Partial<PrintSchemaOptions> {
     path?: string;
 }

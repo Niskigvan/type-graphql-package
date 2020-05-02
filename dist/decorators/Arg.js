@@ -10,7 +10,14 @@ function Arg(name, returnTypeFuncOrOptions, maybeOptions) {
             kind: "arg",
             name,
             description: options.description,
-            ...params_1.getParamInfo({ prototype, propertyKey, parameterIndex, returnTypeFunc, options }),
+            ...params_1.getParamInfo({
+                prototype,
+                propertyKey,
+                parameterIndex,
+                returnTypeFunc,
+                options,
+                argName: name,
+            }),
         });
     };
 }

@@ -1,5 +1,5 @@
 import { PubSubEngine } from "graphql-subscriptions";
-import { ValidatorOptions } from "class-validator";
+import type { ValidatorOptions } from "class-validator";
 import { ParamMetadata } from "../metadata/definitions";
 import { ResolverData, AuthChecker, AuthMode } from "../interfaces";
 import { Middleware } from "../interfaces/Middleware";

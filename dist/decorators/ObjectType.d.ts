@@ -1,6 +1,5 @@
-import { DescriptionOptions, AbstractClassOptions } from "./types";
-export declare type ObjectTypeOptions = DescriptionOptions & AbstractClassOptions & {
-    implements?: Function | Function[];
+import { DescriptionOptions, AbstractClassOptions, ImplementsClassOptions } from "./types";
+export declare type ObjectTypeOptions = DescriptionOptions & AbstractClassOptions & ImplementsClassOptions & {
     /** Set to `true` to disable auth and all middlewares stack for all this Object Type fields resolvers */
     simpleResolvers?: boolean;
 };

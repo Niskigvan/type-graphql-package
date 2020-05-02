@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class ReflectMetadataMissingError extends Error {
     constructor() {
         super("Looks like you've forgot to provide experimental metadata API polyfill. " +
-            "Please read the installation instruction for more details: " +
-            "https://typegraphql.ml/docs/installation.html");
+            "Please read the installation instruction for more details.");
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }

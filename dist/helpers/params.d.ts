@@ -4,7 +4,8 @@ export interface ParamInfo {
     prototype: Object;
     propertyKey: string | symbol;
     parameterIndex: number;
+    argName?: string;
     returnTypeFunc?: ReturnTypeFunc;
     options?: TypeOptions & ValidateOptions;
 }
-export declare function getParamInfo({ prototype, propertyKey, parameterIndex, returnTypeFunc, options, }: ParamInfo): CommonArgMetadata;
+export declare function getParamInfo({ prototype, propertyKey, parameterIndex, argName, returnTypeFunc, options, }: ParamInfo): CommonArgMetadata;

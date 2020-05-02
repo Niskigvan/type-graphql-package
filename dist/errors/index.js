@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 tslib_1.__exportStar(require("./ArgumentValidationError"), exports);
-tslib_1.__exportStar(require("./CannotDetermineTypeError"), exports);
+tslib_1.__exportStar(require("./CannotDetermineGraphQLTypeError"), exports);
 tslib_1.__exportStar(require("./ForbiddenError"), exports);
 tslib_1.__exportStar(require("./GeneratingSchemaError"), exports);
 tslib_1.__exportStar(require("./ConflictingDefaultValuesError"), exports);

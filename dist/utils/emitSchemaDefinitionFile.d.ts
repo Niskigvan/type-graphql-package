@@ -1,5 +1,5 @@
 import { GraphQLSchema } from "graphql";
-import { Options as GraphQLPrintSchemaOptions } from "graphql/utilities/schemaPrinter";
+import { Options as GraphQLPrintSchemaOptions } from "graphql/utilities/printSchema";
 export interface PrintSchemaOptions extends Required<GraphQLPrintSchemaOptions> {
     sortedSchema: boolean;
 }

@@ -8,8 +8,9 @@ export interface GetTypeParams {
     metadataKey: MetadataKey;
     prototype: Object;
     propertyKey: string;
+    parameterIndex?: number;
+    argName?: string;
     returnTypeFunc?: ReturnTypeFunc;
     typeOptions?: TypeOptions;
-    parameterIndex?: number;
 }
-export declare function findType({ metadataKey, prototype, propertyKey, returnTypeFunc, typeOptions, parameterIndex, }: GetTypeParams): TypeInfo;
+export declare function findType({ metadataKey, prototype, propertyKey, parameterIndex, argName, returnTypeFunc, typeOptions, }: GetTypeParams): TypeInfo;

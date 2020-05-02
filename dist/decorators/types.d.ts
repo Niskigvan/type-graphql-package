@@ -1,12 +1,12 @@
 import { GraphQLScalarType } from "graphql";
-import { ValidatorOptions } from "class-validator";
+import type { ValidatorOptions } from "class-validator";
 import { ResolverFilterData, ClassType, ResolverTopicData, Complexity, TypeResolver } from "../interfaces";
 export interface RecursiveArray<TValue> extends Array<RecursiveArray<TValue> | TValue> {
 }
 export declare type TypeValue = ClassType | GraphQLScalarType | Function | object | symbol;
 export declare type ReturnTypeFuncValue = TypeValue | RecursiveArray<TypeValue>;
 export declare type TypeValueThunk = (type?: void) => TypeValue;
-export declare type ClassTypeResolver = (of?: void) => ClassType;
+export declare type ClassTypeResolver = (of?: void) => ClassType | Function;
 export declare type ReturnTypeFunc = (returns?: void) => ReturnTypeFuncValue;
 export declare type SubscriptionFilterFunc = (resolverFilterData: ResolverFilterData<any, any, any>) => boolean | Promise<boolean>;
 export declare type SubscriptionTopicFunc = (resolverTopicData: ResolverTopicData<any, any, any>) => string | string[];
@@ -36,6 +36,9 @@ export interface SchemaNameOptions {
 }
 export interface AbstractClassOptions {
     isAbstract?: boolean;
+}
+export interface ImplementsClassOptions {
+    implements?: Function | Function[];
 }
 export interface ResolveTypeOptions<TSource = any, TContext = any> {
     resolveType?: TypeResolver<TSource, TContext>;

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const returnTypes_1 = require("./returnTypes");
 const errors_1 = require("../errors");
-function findType({ metadataKey, prototype, propertyKey, returnTypeFunc, typeOptions = {}, parameterIndex, }) {
+function findType({ metadataKey, prototype, propertyKey, parameterIndex, argName, returnTypeFunc, typeOptions = {}, }) {
     const options = { ...typeOptions };
     let metadataDesignType;
     const reflectedType = Reflect.getMetadata(metadataKey, prototype, propertyKey);
@@ -12,9 +12,8 @@ function findType({ metadataKey, prototype, propertyKey, returnTypeFunc, typeOpt
     else {
         metadataDesignType = reflectedType;
     }
-    if (!returnTypeFunc &&
-        (!metadataDesignType || (metadataDesignType && returnTypes_1.bannedTypes.includes(metadataDesignType)))) {
-        throw new errors_1.NoExplicitTypeError(prototype.constructor.name, propertyKey, parameterIndex);
+    if (!returnTypeFunc && (!metadataDesignType || returnTypes_1.bannedTypes.includes(metadataDesignType))) {
+        throw new errors_1.NoExplicitTypeError(prototype.constructor.name, propertyKey, parameterIndex, argName);
     }
     if (metadataDesignType === Array) {
         options.array = true;
@@ -43,7 +42,7 @@ function findType({ metadataKey, prototype, propertyKey, returnTypeFunc, typeOpt
         };
     }
     else {
-        throw new errors_1.CannotDetermineTypeError(prototype.constructor.name, propertyKey, parameterIndex);
+        throw new Error("Ooops... this should never happen :)");
     }
 }
 exports.findType = findType;

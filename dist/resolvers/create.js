@@ -4,6 +4,7 @@ const helpers_1 = require("./helpers");
 const types_1 = require("../helpers/types");
 const build_context_1 = require("../schema/build-context");
 const isPromiseLike_1 = require("../utils/isPromiseLike");
+const auth_middleware_1 = require("../helpers/auth-middleware");
 function createHandlerResolver(resolverMetadata) {
     const { validate: globalValidate, authChecker, authMode, pubSub, globalMiddlewares, container, } = build_context_1.BuildContext;
     const middlewares = globalMiddlewares.concat(resolverMetadata.middlewares);
@@ -31,18 +32,23 @@ function createAdvancedFieldResolver(fieldResolverMetadata) {
     const { validate: globalValidate, authChecker, authMode, pubSub, globalMiddlewares, container, } = build_context_1.BuildContext;
     const middlewares = globalMiddlewares.concat(fieldResolverMetadata.middlewares);
     helpers_1.applyAuthChecker(middlewares, authMode, authChecker, fieldResolverMetadata.roles);
-    return async (root, args, context, info) => {
+    return (root, args, context, info) => {
         const resolverData = { root, args, context, info };
         const targetInstance = types_1.convertToType(targetType, root);
-        return helpers_1.applyMiddlewares(container, resolverData, middlewares, async () => {
+        return helpers_1.applyMiddlewares(container, resolverData, middlewares, () => {
             const handlerOrGetterValue = targetInstance[fieldResolverMetadata.methodName];
+            if (typeof handlerOrGetterValue !== "function") {
+                // getter
+                return handlerOrGetterValue;
+            }
             // method
-            if (typeof handlerOrGetterValue === "function") {
-                const params = await helpers_1.getParams(fieldResolverMetadata.params, resolverData, globalValidate, pubSub);
+            const params = helpers_1.getParams(fieldResolverMetadata.params, resolverData, globalValidate, pubSub);
+            if (isPromiseLike_1.default(params)) {
+                return params.then(resolvedParams => handlerOrGetterValue.apply(targetInstance, resolvedParams));
+            }
+            else {
                 return handlerOrGetterValue.apply(targetInstance, params);
             }
-            // getter
-            return handlerOrGetterValue;
         });
     };
 }
@@ -57,3 +63,14 @@ function createBasicFieldResolver(fieldMetadata) {
     };
 }
 exports.createBasicFieldResolver = createBasicFieldResolver;
+function wrapResolverWithAuthChecker(resolver, roles) {
+    const { authChecker, authMode } = build_context_1.BuildContext;
+    if (!authChecker || !roles) {
+        return resolver;
+    }
+    return (root, args, context, info) => {
+        const resolverData = { root, args, context, info };
+        return auth_middleware_1.AuthMiddleware(authChecker, authMode, roles)(resolverData, async () => resolver(root, args, context, info));
+    };
+}
+exports.wrapResolverWithAuthChecker = wrapResolverWithAuthChecker;

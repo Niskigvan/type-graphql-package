@@ -24,6 +24,7 @@ export declare abstract class SchemaGenerator {
     private static interfaceTypesInfo;
     private static enumTypesInfo;
     private static unionTypesInfo;
+    private static usedInterfaceTypes;
     static generateFromMetadata(options: SchemaGeneratorOptions): Promise<GraphQLSchema>;
     static generateFromMetadataSync(options: SchemaGeneratorOptions): GraphQLSchema;
     private static checkForErrors;

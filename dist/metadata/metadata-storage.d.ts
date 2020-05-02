@@ -19,9 +19,9 @@ export declare class MetadataStorage {
     fieldDirectives: DirectiveFieldMetadata[];
     classExtensions: ExtensionsClassMetadata[];
     fieldExtensions: ExtensionsFieldMetadata[];
-    private resolverClasses;
-    private fields;
-    private params;
+    resolverClasses: ResolverClassMetadata[];
+    fields: FieldMetadata[];
+    params: ParamMetadata[];
     constructor();
     collectQueryHandlerMetadata(definition: ResolverMetadata): void;
     collectMutationHandlerMetadata(definition: ResolverMetadata): void;

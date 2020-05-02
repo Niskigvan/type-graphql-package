@@ -27,14 +27,14 @@ function convertTypeIfScalar(type) {
     }
 }
 exports.convertTypeIfScalar = convertTypeIfScalar;
-function wrapWithTypeOptions(typeOwnerName, type, typeOptions, nullableByDefault) {
+function wrapWithTypeOptions(target, propertyName, type, typeOptions, nullableByDefault) {
     if (!typeOptions.array &&
         (typeOptions.nullable === "items" || typeOptions.nullable === "itemsAndList")) {
-        throw new errors_1.WrongNullableListOptionError(typeOwnerName, typeOptions.nullable);
+        throw new errors_1.WrongNullableListOptionError(target.name, propertyName, typeOptions.nullable);
     }
     if (typeOptions.defaultValue !== undefined &&
         (typeOptions.nullable === false || typeOptions.nullable === "items")) {
-        throw new errors_1.ConflictingDefaultWithNullableError(typeOwnerName, typeOptions.defaultValue, typeOptions.nullable);
+        throw new errors_1.ConflictingDefaultWithNullableError(target.name, propertyName, typeOptions.defaultValue, typeOptions.nullable);
     }
     let gqlType = type;
     if (typeOptions.array) {
